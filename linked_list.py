@@ -12,7 +12,7 @@ class LinkedList:
         node = Node(data, self.head)
         self.head = node
 
-    def show(self):
+    def print(self):
         if self.head is None:
             print("Linked list is empty")
             return
@@ -34,7 +34,7 @@ class LinkedList:
             itr = itr.next
         itr.next = Node(data, None)
 
-    def convert_to_linked_list(self, data_list):
+    def insert_values(self, data_list):
         self.head = None
         for element in data_list:
             self.insert_at_end(element)
@@ -83,12 +83,40 @@ class LinkedList:
             itr = itr.next
             count += 1
 
+    def insert_after_value(self, data_after, data_to_insert):
+        itr = self.head
+        while itr:
+            print(itr.data)
+            if itr.data == data_after:
+                new_node = Node(data_to_insert, itr.next)
+                itr.next = new_node
+                return
+            itr = itr.next
+        raise Exception("Value not found!")
+
+    def remove_by_value(self, data):
+        # Remove first node that contains specified data
+        itr = self.head
+        while itr.next:
+            if itr.next.data == data:
+                itr.next = itr.next.next
+                return
+            itr = itr.next
+        raise Exception("Value not found!")
+
 
 if __name__ == "__main__":
     ll = LinkedList()
-    ll.convert_to_linked_list(["apple", "banana", "cantaloupe", "durian"])
-    ll.show()
-    ll.insert_at(0, "figs")
-    ll.show()
-    ll.insert_at(4, "cats")
-    ll.show()
+    ll.insert_values(["banana","mango","grapes","orange"])
+    ll.print()
+    ll.insert_after_value("mango","apple") # insert apple after mango
+    ll.print()
+    ll.remove_by_value("orange") # remove orange from linked list
+    ll.print()
+    ll.remove_by_value("figs")
+    ll.print()
+    ll.remove_by_value("banana")
+    ll.remove_by_value("mango")
+    ll.remove_by_value("apple")
+    ll.remove_by_value("grapes")
+    ll.print()
