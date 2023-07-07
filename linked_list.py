@@ -86,24 +86,26 @@ class LinkedList:
     def insert_after_value(self, data_after, data_to_insert):
         itr = self.head
         while itr:
-            print(itr.data)
             if itr.data == data_after:
                 new_node = Node(data_to_insert, itr.next)
                 itr.next = new_node
                 return
             itr = itr.next
-        raise Exception("Value not found!")
+        print(f"Value {data_after} not found!")
 
     def remove_by_value(self, data):
         # Remove first node that contains specified data
+        if self.head.data == data:
+            self.remove_at(0)
+            return
+
         itr = self.head
         while itr.next:
             if itr.next.data == data:
                 itr.next = itr.next.next
                 return
             itr = itr.next
-        raise Exception("Value not found!")
-
+        print(f"Value {data} not found!")
 
 if __name__ == "__main__":
     ll = LinkedList()
