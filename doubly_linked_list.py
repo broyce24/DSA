@@ -71,30 +71,50 @@ class DoublyLinkedList:
             itr = itr.next
         self.size -= 1
 
-    def insert_at(self, index, val):
+    def insert_at(self, index, data):
         if index < 0 or index >= self.size:
             raise Exception("Invalid index!")
         if index == 0:
-            self.insert_at_beginning(val)
+            self.insert_at_beginning(data)
             return
         itr = self.head
         i = 0
         while itr:
             if i == index - 1:
-                new_node = Node(itr, val, itr.next)
+                new_node = Node(itr, data, itr.next)
                 itr.next = new_node
                 itr.next.next.prev = new_node
             i += 1
             itr = itr.next
 
+    def insert_after_value(self, val, data):
+        itr = self.head
+        while itr:
+            if itr.data == val:
+                new_node = Node(itr, data, itr.next)
+                itr.next = new_node
+                itr.next.next.prev = new_node
+                return
+            itr = itr.next
+        raise Exception(f"Value {val} not found!")
+
+    def remove_by_value(self, val):
+        if self.head.data == val:
+            self.head = self.head.next
+            return
+        itr = self.head
+        while itr:
+            if itr.data == val:
+                itr.prev.next = itr.next
+                if itr.next:
+                    itr.next.prev = itr.prev
+                return
+            itr = itr.next
+        print(f"Value {val} not found!")
+
+
 def main():
-    animals = ['cat', 'dog', 'mouse', 'rat']
-    some_vals = ['a', 2, False, True]
-    dll = DoublyLinkedList()
-    dll.insert_values(animals)
-    dll.print()
-    dll.insert_at(3, 'hello')
-    dll.print()
+    ll = DoublyLinkedList()
 
 
 if __name__ == '__main__':
