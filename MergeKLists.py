@@ -15,6 +15,8 @@ class ListNode:
 class Solution:
     def mergeKLists(self, lists):
         # setting first value to min node value
+        if not any(lists):
+            return None
         value = 10001
         for ll in lists:
             value = min(ll.val, value)
@@ -22,9 +24,8 @@ class Solution:
         result = ListNode(None, None)
         iter_res = result
         next_min = 10001
-        # While we have lists left
-        for _ in range(5):  # debug
-            # For each list we have
+
+        while any(lists):
             print(list(map(str, lists)), "min:", value)
             for i in range(len(lists)):
                 while lists[i] and lists[i].val == value:
@@ -39,13 +40,15 @@ class Solution:
             next_min = 10001
         return result.next
 
-l1 = ListNode(1, ListNode(4, ListNode(5, None)))
+l1 = ListNode(1, ListNode(4, ListNode(5, ListNode(100, None))))
 l2 = ListNode(1, ListNode(3, ListNode(4, None)))
 l3 = ListNode(2, ListNode(6, None))
+l4 = ListNode(16, None)
 #print(l1)
-lists = [l1, l2, l3]
+lists = [l1, l2, l3, l4]
 S = Solution()
 ans = S.mergeKLists(lists)
 while ans:
     print(ans.val, end=', ')
     ans = ans.next
+print(S.mergeKLists([]))
